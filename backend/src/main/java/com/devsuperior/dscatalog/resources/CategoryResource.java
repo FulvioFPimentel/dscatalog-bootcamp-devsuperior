@@ -28,6 +28,8 @@ public class CategoryResource {
 	@Autowired
 	private CategoryService service;
 	
+
+	
 	@GetMapping
 	public ResponseEntity<Page<CategoryDTO>> findAll(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
