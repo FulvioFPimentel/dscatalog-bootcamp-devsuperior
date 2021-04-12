@@ -17,7 +17,7 @@ const Navbar = () => (
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/Products" activeClassName="active">
+                    <NavLink to="/products" activeClassName="active">
                         CALÁLOGO
                     </NavLink>
                 </li>

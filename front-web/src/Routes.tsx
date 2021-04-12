@@ -13,10 +13,10 @@ const Routes = () => (
             <Route path="/" exact>
                 <Home />
             </Route>
-            <Route path="/Products" exact>
+            <Route path="/products" exact>
                 <Catalog />
             </Route>
-            <Route path="/Products/:productId">
+            <Route path="/products/:productId">
                 <ProductDetails />
             </Route>
             <Route path="/Admin">
