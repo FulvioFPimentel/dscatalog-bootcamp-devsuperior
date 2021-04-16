@@ -5,7 +5,6 @@ type RequestParams = {
     url: string;
     data?: object;
     params?: object;
-
 }
 
 const BASE_URL = "http://localhost:3000";
@@ -15,6 +14,6 @@ const BASE_URL = "http://localhost:3000";
         method,
         url: `${BASE_URL}${url}`,
         data,
-        params
+        params,
     });
 }
