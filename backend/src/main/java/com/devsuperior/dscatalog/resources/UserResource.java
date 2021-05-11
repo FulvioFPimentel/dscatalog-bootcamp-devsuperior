@@ -32,8 +32,6 @@ public class UserResource {
 	@Autowired
 	private UserService service;
 	
-
-	
 	@GetMapping
 	public ResponseEntity<Page<UserDTO>> findAll(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,

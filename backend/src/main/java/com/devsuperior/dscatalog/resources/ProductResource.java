@@ -30,8 +30,6 @@ public class ProductResource {
 	@Autowired
 	private ProductService service;
 	
-
-	
 	@GetMapping
 	public ResponseEntity<Page<ProductDTO>> findAll(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
