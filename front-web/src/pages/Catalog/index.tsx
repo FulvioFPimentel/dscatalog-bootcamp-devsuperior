@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { ProductsResponse } from 'core/types/Product';
 import { makeRequest } from 'core/utils/request';
