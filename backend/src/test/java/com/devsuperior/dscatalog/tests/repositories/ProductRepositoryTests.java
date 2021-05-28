@@ -1,5 +1,7 @@
 package com.devsuperior.dscatalog.tests.repositories;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -11,6 +13,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.entities.Product;
 import com.devsuperior.dscatalog.repositories.ProductRepository;
 import com.devsuperior.dscatalog.tests.factory.ProductFactory;
@@ -21,11 +24,13 @@ public class ProductRepositoryTests {
 	@Autowired
 	private ProductRepository repository;
 	
+	
 	private long existingId;
 	private long nonExistingId;
 	private long countTotalProducts;
 	private long countPCGamerProducts;
 	private PageRequest pageRequest;
+	private List<Category> categories;
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -35,6 +40,31 @@ public class ProductRepositoryTests {
 		countPCGamerProducts = 21L;
 		pageRequest = PageRequest.of(0, 10);
 	}
+	
+	
+	@Test
+	public void findShouldReturnAllCategoriesWhatNameTheProductExisting() {
+		
+		Long totalCategories = 25L;
+		
+		Page<Product> result = repository.find(categories, "", pageRequest);
+		
+		Assertions.assertFalse(result.isEmpty());
+		Assertions.assertEquals(totalCategories, result.getTotalElements());
+	}
+	
+	@Test
+	public void findShouldReturnAllCategoriesWhatToSpecifiedId() {
+		
+		Long countId = 23L;
+		
+		List<Category> categoryId = new ArrayList<>();
+		categoryId.add(new Category(3L, ""));
+		
+		Page<Product> result = repository.find(categoryId, "", pageRequest);
+		Assertions.assertEquals(countId, result.getTotalElements());
+	}
+	
 	
 	@Test
 	public void findShouldReturnAllProductsWhenNameIsEmpty() {
