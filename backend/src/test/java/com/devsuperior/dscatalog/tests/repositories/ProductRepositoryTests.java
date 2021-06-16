@@ -41,6 +41,16 @@ public class ProductRepositoryTests {
 		pageRequest = PageRequest.of(0, 10);
 	}
 	
+	@Test
+	public void findShouldReturnAllProductsWhenCategoryNotInformed() {
+		
+		List<Category> categories = null;
+		
+		Page<Product> result = repository.find(categories, "", pageRequest);
+		
+		Assertions.assertFalse(result.isEmpty());
+		Assertions.assertEquals(countTotalProducts, result.getTotalElements());
+	}
 	
 	@Test
 	public void findShouldReturnAllCategoriesWhatNameTheProductExisting() {
@@ -65,6 +75,14 @@ public class ProductRepositoryTests {
 		Assertions.assertEquals(countId, result.getTotalElements());
 	}
 	
+	@Test
+	public void findShouldReturnNothingWhenNameDoesNotExists() {
+		
+		String name = "Camera";
+		Page<Product> result = repository.find(null, name, pageRequest);
+		
+		Assertions.assertTrue(result.isEmpty());
+	}
 	
 	@Test
 	public void findShouldReturnAllProductsWhenNameIsEmpty() {
