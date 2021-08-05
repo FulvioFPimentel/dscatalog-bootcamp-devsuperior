@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -74,6 +75,20 @@ public class ProductServiceTests {
 	}
 	
 	@Test
+	public void findAllPagedShouldReturnPage() {
+		
+		Long categoryId = 0L;
+		String name = "";
+		PageRequest pageRequest = PageRequest.of(0, 10);
+		
+		Page<ProductDTO> result = service.findAllPaged(categoryId, name, pageRequest);
+		
+		Assertions.assertNotNull(result);
+		Assertions.assertFalse(result.isEmpty());
+		Mockito.verify(repository, Mockito.times(1)).find(null, name, pageRequest);
+	}
+	
+	@Test
 	public void findAllPagedShouldReturnPaginationWhenExists() {
 		
 		Assertions.assertDoesNotThrow(() -> {
@@ -90,18 +105,13 @@ public class ProductServiceTests {
 			service.update(nonExistingId,	productDTO);
 			
 		});
-			
-		Mockito.verify(repository, Mockito.times(1)).getOne(nonExistingId);
 	}
 	
 	@Test
 	public void updateShouldReturnDTOWhenIdExists() {
-		
-		Assertions.assertDoesNotThrow(() -> {
-			service.update(existingId,	productDTO);
-			
-		});
-			
+	
+		ProductDTO result = service.update(existingId,	productDTO);
+		Assertions.assertNotNull(result);
 		
 		Mockito.verify(repository, Mockito.times(1)).getOne(existingId);
 	}
@@ -113,17 +123,15 @@ public class ProductServiceTests {
 			service.findById(nonExistingId);
 		});
 		
-		Mockito.verify(repository, Mockito.times(1)).findById(nonExistingId);
 	}
 	
 	@Test
-	public void updateShouldReturnDTOWhenIdexists() {
+	public void findByIdShouldReturnProductDTOWhenIdExists() {
 		
-		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-			service.findById(nonExistingId);
-		});
+		ProductDTO result = service.findById(existingId);
+		Assertions.assertNotNull(result);
 		
-		Mockito.verify(repository, Mockito.times(1)).findById(nonExistingId);
+		Mockito.verify(repository, Mockito.times(1)).findById(existingId);
 	}
 	
 	@Test

@@ -18,12 +18,11 @@ import com.devsuperior.dscatalog.entities.Product;
 import com.devsuperior.dscatalog.repositories.ProductRepository;
 import com.devsuperior.dscatalog.tests.factory.ProductFactory;
 
-@DataJpaTest                             // Vai executar esses testes carregamento somente os componentes da JPA
+@DataJpaTest                             
 public class ProductRepositoryTests {
 	
 	@Autowired
-	private ProductRepository repository;
-	
+	private ProductRepository repository;	
 	
 	private long existingId;
 	private long nonExistingId;
@@ -41,6 +40,8 @@ public class ProductRepositoryTests {
 		pageRequest = PageRequest.of(0, 10);
 	}
 	
+
+
 	@Test
 	public void findShouldReturnAllProductsWhenCategoryNotInformed() {
 		
@@ -136,11 +137,11 @@ public class ProductRepositoryTests {
 	public void deleteShouldDeleteObjectWhenIdExists() {
 		
 		repository.deleteById(existingId);
-		Optional<Product> result = repository.findById(existingId);
 		
+		Optional<Product> result = repository.findById(existingId);
 		Assertions.assertFalse(result.isPresent());
 	}
-	
+
 	@Test
 	public void deleteShouldEmptyResultDataAccessExceptionWhenIdDoesNotExist() {
 		

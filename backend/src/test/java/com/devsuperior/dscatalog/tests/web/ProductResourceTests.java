@@ -105,41 +105,33 @@ public class ProductResourceTests {
 	}
 	
 	@Test
-	public void deleteShouldNotFoundWhenIdDoesNotExist() throws Exception {
+	public void deleteShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
 		
 		String accessToken = obtainAccessToken(operatorUsername, operatorPassword);
-		
-		String jsonBody = objectMapper.writeValueAsString(newProductDTO);
 		
 		ResultActions result =
 				mockMvc.perform(delete("/products/{id}", nonExistingId)
 					.header("Authorization", "Bearer " + accessToken)
-					.content(jsonBody)
-					.contentType(MediaType.APPLICATION_JSON)
 					.accept(MediaType.APPLICATION_JSON));	
 		
 		result.andExpect(status().isNotFound());
 	}
 	
 	@Test
-	public void deleteShouldNoContentWhenIdExist() throws Exception {
+	public void deleteShouldReturnNoContentWhenIdExists() throws Exception {
 		
 		String accessToken = obtainAccessToken(operatorUsername, operatorPassword);
-		
-		String jsonBody = objectMapper.writeValueAsString(priceNegativeProductDTO);
 		
 		ResultActions result =
 				mockMvc.perform(delete("/products/{id}", existingId)
 					.header("Authorization", "Bearer " + accessToken)
-					.content(jsonBody)
-					.contentType(MediaType.APPLICATION_JSON)
 					.accept(MediaType.APPLICATION_JSON));	
 		
 		result.andExpect(status().isNoContent());
 	}
 	
 	@Test
-	public void insertShouldUnprocessableEntityWhenPriceIsNotPositive() throws Exception {
+	public void insertShouldReturnUnprocessableEntityWhenNegativePrice() throws Exception {
 		
 		String accessToken = obtainAccessToken(operatorUsername, operatorPassword);
 		
@@ -156,17 +148,14 @@ public class ProductResourceTests {
 	}
 	
 	@Test
-	public void insertShouldCreatedWhenDataIsValid() throws Exception {
+	public void insertShouldReturnCreatedProductWhenValidData() throws Exception {
 		
 		String accessToken = obtainAccessToken(operatorUsername, operatorPassword);
 		
 		String jsonBody = objectMapper.writeValueAsString(newProductDTO);
 		
-		String expectedName = newProductDTO.getName();
-		Double expectedPrice = newProductDTO.getPrice();
-		
 		ResultActions result =
-				mockMvc.perform(post("/products", newProductDTO)
+				mockMvc.perform(post("/products")
 					.header("Authorization", "Bearer " + accessToken)
 					.content(jsonBody)
 					.contentType(MediaType.APPLICATION_JSON)
@@ -175,8 +164,6 @@ public class ProductResourceTests {
 		result.andExpect(status().isCreated());
 		result.andExpect(jsonPath("$.id").exists());
 		result.andExpect(jsonPath("$.id").value(existingId));
-		result.andExpect(jsonPath("$.name").value(expectedName));
-		result.andExpect(jsonPath("$.price").value(expectedPrice));
 	}
 	
 	@Test
