@@ -5,11 +5,12 @@ import { generateList } from 'core/utils/list';
 
 const ProductCardLoader = () => {
     const loaderItems = generateList(12);
-
+    let n = 0;
     return (
         <>
             {loaderItems.map(item => (
-                <ContentLoader
+                <ContentLoader 
+                    key={n++}
                     speed={1}
                     width={250}
                     height={335}
