@@ -61,13 +61,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration corsConfig = new CorsConfiguration();                                    // Configuração do cors 
-		corsConfig.setAllowedOrigins(Arrays.asList("*"));								   // Quem vai poder acessar (“*”)
+		corsConfig.setAllowedOriginPatterns(Arrays.asList("*"));								  			// Quem vai poder acessar (“*”)
 		corsConfig.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "PATCH"));	   // Quais métodos vou permitir ("POST", "GET", "PUT", "DELETE", "PATCH")
 		corsConfig.setAllowCredentials(true);													   // Vou permitir Credencial (true)
 		corsConfig.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));			   // Quais cabeçalho eu vou deixar 
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", corsConfig);									    //Todos os caminhos vão pelas configurações citado acima 
+		source.registerCorsConfiguration("/**", corsConfig);									    //Todos os caminhos vão pelas configurações citado a cima 
 		return source;
 	}
 
@@ -75,7 +75,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	public FilterRegistrationBean<CorsFilter> corsFilter() {
 		FilterRegistrationBean<CorsFilter> bean 
 			= new FilterRegistrationBean<>(new CorsFilter(corsConfigurationSource()));
-		bean.setOrder(Ordered.HIGHEST_PRECEDENCE);													// Registra o Cors com a máxima precedência 
+		bean.setOrder(Ordered.HIGHEST_PRECEDENCE);													// Registrar o Cors com a máxima precedência 
 		return bean;
 	}	
 	
