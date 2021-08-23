@@ -14,8 +14,7 @@ type FormData = {
 }
 
 const Login = () => {
-
-    const { register, handleSubmit } = useForm<FormData>();
+    const { register, handleSubmit, formState: {errors} } = useForm<FormData>();
     const [hasError, setHasError] = useState(false);
     const history = useHistory();
 
@@ -39,18 +38,41 @@ const Login = () => {
                 </div>
             )}
            <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-               <input
-                type="email" 
-                className="form-control input-base margin-botton-30"
-                placeholder="Email"
-                {...register('username', {required:true})}
-                />
+               <div className="margin-botton-30">
                 <input
-                type="password" 
-                className="form-control input-base"
-                placeholder="Senha"
-                {...register('password', {required:true, minLength: 6}) }
+                    type="email" 
+                    className={`form-control input-base ${errors.username ? 'is-invalid' : ''}`}
+                    placeholder="Email"
+                    {...register('username',
+                        {   required: "Campo obrigadório",
+                            pattern: { 
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            message:"Email inválido" }
+                        })}
                 />
+                    {errors.username && (
+                        <div className="invalid-feedback d-block">
+                        {errors.username.message}
+                    </div> 
+                    )}
+                                  
+               </div>
+
+                <div className="margin-botton-30">
+                    <input
+                    type="password" 
+                    className={`form-control input-base ${errors.password ? 'is-invalid' : ''}`}
+                    placeholder="Senha"
+                    {...register('password', {
+                        required: "Campo obrigadório",
+                        minLength: 6}) }
+                    />
+                    {errors.password && (
+                        <div className="invalid-feedback d-block">
+                        {errors.password.message}
+                    </div> 
+                    )}
+                </div>
                 <Link to="/admin/auth/recover" className="login-link-recover">
                     Esqueci a senha?
                 </Link>
