@@ -8,7 +8,7 @@ import { makeLogin } from 'core/utils/request';
 import { useState } from 'react';
 import { saveSessionData } from 'core/utils/auth';
 
-type FormData = {
+type formState = {
     username: string;
     password: string;
 }
@@ -18,14 +18,14 @@ type LocationState = {
 }
 
 const Login = () => {
-    const { register, handleSubmit, formState: {errors} } = useForm<FormData>();
+    const { register, handleSubmit, formState: {errors} } = useForm<formState>();
     const [hasError, setHasError] = useState(false);
     const history = useHistory();
     let location = useLocation<LocationState>();
 
     const { from } = location.state || { from: { pathname: "/admin" } };
 
-    const onSubmit = (data:FormData) => {
+    const onSubmit = (data:formState) => {
         makeLogin(data)
         .then(response => {
             setHasError(false);
@@ -45,7 +45,7 @@ const Login = () => {
                 </div>
             )}
            <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-               <div className="margin-botton-30">
+               <div className="margin-bottom-30">
                 <input
                     type="email" 
                     className={`form-control input-base ${errors.username ? 'is-invalid' : ''}`}
@@ -58,14 +58,14 @@ const Login = () => {
                         })}
                 />
                     {errors.username && (
-                        <div className="invalid-feedback d-block">
+                    <div className="invalid-feedback d-block">
                         {errors.username.message}
                     </div> 
                     )}
                                   
                </div>
 
-                <div className="margin-botton-30">
+                <div className="margin-bottom-30">
                     <input
                     type="password" 
                     className={`form-control input-base ${errors.password ? 'is-invalid' : ''}`}

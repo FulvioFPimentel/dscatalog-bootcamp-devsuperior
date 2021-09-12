@@ -35,7 +35,7 @@ public class ProductDTO implements Serializable{
 	@PastOrPresent(message = "A data do produto não pode ser futura")
 	private Instant date;
 	
-	@NotEmpty(message = "Produto sem categoria não é permitido")
+	// @NotEmpty(message = "Produto sem categoria não é permitido")
 	private List<CategoryDTO> categories = new ArrayList<>();
 	
 	public ProductDTO() {

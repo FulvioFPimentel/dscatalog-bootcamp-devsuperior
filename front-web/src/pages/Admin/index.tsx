@@ -20,7 +20,7 @@ const Admin = () => (
                     <h1>Users</h1>
                 </PrivateRoute>
             </Switch>
-        </div>
+        </div>  
     </div>
 )
 
