@@ -1,6 +1,10 @@
 .product-card {
     padding: 20px 20px 30px 20px;
     text-align: center;
+
+    .product-price-container {
+        margin-top: 20px;
+    }
 }
 
 .product-info{
