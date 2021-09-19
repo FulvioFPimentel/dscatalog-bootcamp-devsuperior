@@ -7,8 +7,9 @@ import Select from 'react-select';
 import BaseForm from '../../BaseForm';
 import './styles.scss'
 import { Category } from 'core/types/Product';
+import PriceField from './PriceField';
 
-type FormState = {
+export type FormState = {
     name: string;
     price: string;
     description: string;
@@ -95,7 +96,6 @@ useEffect(() => {
                                 
                             <Controller 
                                 control={control}
-                                {...register('categories')}
                                 name="categories"
                                 rules={{ required: true}}
                                 render={({ field: {value, onChange}}) => (
@@ -107,6 +107,7 @@ useEffect(() => {
                                         getOptionLabel={(option: Category) => option.name}
                                         getOptionValue={(option: Category) => String(option.id)}
                                         classNamePrefix="categories-select"
+                                        defaultValue={[]}
                                         placeholder="Categorias"
                                         isMulti
                                     />
@@ -120,12 +121,7 @@ useEffect(() => {
                         </div>  
 
                         <div className="margin-bottom-30">
-                            <input 
-                                {...register('price', { required: "Campo obrigadório" })}
-                                type="number" 
-                                className="form-control input-base" 
-                                placeholder="Preço"
-                            />
+                            <PriceField control={control}/>
                             {errors.price && (
                                 <div className="invalid-feedback d-block">
                                     {errors.price.message}
