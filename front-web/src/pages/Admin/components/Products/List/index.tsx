@@ -43,7 +43,7 @@ const List = () => {
         const confirm = window.confirm('Deseja realmente excluir este produto?')
         
         if (confirm) {
-            makePrivateRequest({ url: `/products/${productId}`,  method: 'DELETE'})
+            makePrivateRequest({ url: `/products/${productId}`,  method: 'DELETE' })
                 .then(() =>  {
                     toast.info('Producto removido com sucesso!');
                     getProducts();
@@ -70,7 +70,7 @@ const List = () => {
                         totalPages={productsResponse.totalPages}
                         activePage={activePage}
                         onChange={page => setActivePage(page)}
-                    />)}
+                />)}
             </div>
         </div>
     ) 

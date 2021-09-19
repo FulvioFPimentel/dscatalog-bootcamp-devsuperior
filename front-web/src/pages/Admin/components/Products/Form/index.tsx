@@ -1,16 +1,19 @@
 import { makePrivateRequest, makeRequest } from 'core/utils/request';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router';
 import { toast } from 'react-toastify';
+import Select from 'react-select';
 import BaseForm from '../../BaseForm';
 import './styles.scss'
+import { Category } from 'core/types/Product';
 
 type FormState = {
     name: string;
     price: string;
     description: string;
     imgUrl: string;
+    categories: Category[];
 }
 
 type ParamsType = {
@@ -19,9 +22,11 @@ type ParamsType = {
 
 const Form = () => {
 
-    const { register, handleSubmit, formState: {errors}, setValue  } = useForm<FormState>(); 
+    const { register, handleSubmit, formState: {errors}, setValue, control  } = useForm<FormState>(); 
     const history = useHistory();
     const {productId } = useParams<ParamsType>();
+    const [isLoadingCategories, setIsLoadingCategories] = useState(false);
+    const [categories, setCategories] = useState<Category[]>([]);
     const isEditing = productId !== 'create';
     const formTitle = isEditing ? `Editar Produto`  : 'Cadastrar um Produto'
 
@@ -33,9 +38,17 @@ useEffect(() => {
             setValue("price", response.data.price);
             setValue("description", response.data.description);
             setValue("imgUrl", response.data.imgUrl);
+            setValue('categories', response.data.categories);
         })
     }
-},[productId, isEditing, setValue])
+},[productId, isEditing, setValue]);
+
+useEffect(() => {
+    setIsLoadingCategories(true);
+    makeRequest({ url: '/categories' })
+    .then(response => setCategories(response.data.content))
+    .finally(() => setIsLoadingCategories(false));
+}, []);
 
     const onSubmit = (data: FormState) => {
          makePrivateRequest({ 
@@ -53,7 +66,7 @@ useEffect(() => {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+         <form onSubmit={handleSubmit(onSubmit)}>
             <BaseForm 
                 title={formTitle}
             >
@@ -77,6 +90,34 @@ useEffect(() => {
                                 </div> 
                             )}
                         </div>
+
+                        <div className="margin-bottom-30">    
+                                
+                            <Controller 
+                                control={control}
+                                {...register('categories')}
+                                name="categories"
+                                rules={{ required: true}}
+                                render={({ field: {value, onChange}}) => (
+                                    <Select 
+                                        isLoading={isLoadingCategories}
+                                        value={value}
+                                        onChange={onChange}
+                                        options={categories} 
+                                        getOptionLabel={(option: Category) => option.name}
+                                        getOptionValue={(option: Category) => String(option.id)}
+                                        classNamePrefix="categories-select"
+                                        placeholder="Categorias"
+                                        isMulti
+                                    />
+                                )}
+                            />
+                            {errors.categories && (
+                                <div className="invalid-feedback d-block">
+                                    Campo obrigatório
+                                </div> 
+                            )}
+                        </div>  
 
                         <div className="margin-bottom-30">
                             <input 
@@ -117,7 +158,7 @@ useEffect(() => {
                         />
                         {errors.description && (
                                 <div className="invalid-feedback d-block">
-                                    {errors.description.message}
+                                    {errors.description.message}    
                                 </div> 
                             )}
                     </div>
