@@ -8,6 +8,7 @@ import BaseForm from '../../BaseForm';
 import './styles.scss'
 import { Category } from 'core/types/Product';
 import PriceField from './PriceField';
+import ImageUpload from '../ImageUpload';
 
 export type FormState = {
     name: string;
@@ -28,6 +29,9 @@ const Form = () => {
     const {productId } = useParams<ParamsType>();
     const [isLoadingCategories, setIsLoadingCategories] = useState(false);
     const [categories, setCategories] = useState<Category[]>([]);
+    const [uploadedImgUrl, setUploadedImgUrl] = useState('');
+    const [productImgUrl, setProductImgUrl] = useState('');
+
     const isEditing = productId !== 'create';
     const formTitle = isEditing ? `Editar Produto`  : 'Cadastrar um Produto'
 
@@ -38,8 +42,9 @@ useEffect(() => {
             setValue("name", response.data.name);
             setValue("price", response.data.price);
             setValue("description", response.data.description);
-            setValue("imgUrl", response.data.imgUrl);
             setValue('categories', response.data.categories);
+
+            setProductImgUrl(response.data.imgUrl);
         })
     }
 },[productId, isEditing, setValue]);
@@ -52,10 +57,15 @@ useEffect(() => {
 }, []);
 
     const onSubmit = (data: FormState) => {
+        const payload = {
+            ...data,
+            imgUrl: uploadedImgUrl || productImgUrl
+        }
+
          makePrivateRequest({ 
              url: isEditing ? `/products/${productId}` : '/products', 
              method: isEditing ? 'PUT' : 'POST', 
-             data 
+             data: payload
             })
          .then(() => {
              toast.info('Produto salvo com sucesso!')
@@ -64,6 +74,10 @@ useEffect(() => {
          .catch(() => {
              toast.error('Erro ao salvar o produto!')
          })
+    }
+
+    const onUploadSuccess = (imgUrl: string) => {
+        setUploadedImgUrl(imgUrl);
     }
 
     return (
@@ -107,7 +121,7 @@ useEffect(() => {
                                         getOptionLabel={(option: Category) => option.name}
                                         getOptionValue={(option: Category) => String(option.id)}
                                         classNamePrefix="categories-select"
-                                        defaultValue={[]}
+                                        defaultValue={null}
                                         placeholder="Categorias"
                                         isMulti
                                     />
@@ -130,17 +144,10 @@ useEffect(() => {
                         </div>
 
                         <div className="margin-bottom-30">
-                            <input 
-                                {...register('imgUrl', { required: "Campo obrigadório" })}
-                                type="text" 
-                                className="form-control input-base" 
-                                placeholder="Imagem do produto"
+                            <ImageUpload 
+                                onUploadSuccess={onUploadSuccess}
+                                productImgUrl={productImgUrl}
                             />
-                            {errors.imgUrl && (
-                                <div className="invalid-feedback d-block">
-                                    {errors.imgUrl.message}
-                                </div> 
-                            )}
                         </div>
 
                     </div>
