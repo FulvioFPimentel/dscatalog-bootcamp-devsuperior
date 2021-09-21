@@ -123,6 +123,7 @@ useEffect(() => {
                                         classNamePrefix="categories-select"
                                         defaultValue={null}
                                         placeholder="Categorias"
+                                        inputId="categories"
                                         isMulti
                                     />
                                 )}
