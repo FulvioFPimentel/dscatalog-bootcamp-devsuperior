@@ -63,6 +63,7 @@ const List = () => {
                 {isLoading ? <CardLoader /> : (
                     productsResponse?.content.map(product => (
                         <Card product={product} key={product.id} onRemove={onRemove} />
+
                     ))
                 )}
                 {productsResponse && (

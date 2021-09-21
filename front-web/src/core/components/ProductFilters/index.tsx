@@ -8,17 +8,21 @@ import { Category } from 'core/types/Product';
 export type FilterForm = {
     name?: string;
     categoryId?: number;
+    
 }
 
 type Props = {
-    onSearch: (filter: FilterForm) => void;
+    name?: string;
+    category?: Category;
+    handleChangeName: (name: string) => void;
+    handleChangeCategory: (category: Category) => void;
+    clearFilters: () => void;
 }
 
-const ProductFilters = ({ onSearch }:Props) => {
+const ProductFilters = ({ name, handleChangeName, category, handleChangeCategory, clearFilters }:Props) => {
     const [isLoadingCategories, setIsLoadingCategories] = useState(false);
     const [categories, setCategories] = useState<Category[]>([]);
-    const [name, setName] = useState('');
-    const [category, setCategory] = useState<Category>();
+   
 
     useEffect(() => {
         setIsLoadingCategories(true);
@@ -26,25 +30,6 @@ const ProductFilters = ({ onSearch }:Props) => {
         .then(response => setCategories(response.data.content))
         .finally(() => setIsLoadingCategories(false));
     }, []);
-
-    const handleChangeName = (name: string) => {
-        setName(name)
-
-        onSearch({name, categoryId: category?.id})
-    };
-
-    const handleChangeCategory = (category: Category ) => {
-        setCategory(category);
-
-        onSearch({name, categoryId: category?.id})
-    };
-
-    const clearFilters = () => {
-        setCategory(undefined);
-        setName('');
-
-        onSearch({name: '', categoryId: undefined});
-    }
 
     return (
         <div className="card-base product-filters-container">
