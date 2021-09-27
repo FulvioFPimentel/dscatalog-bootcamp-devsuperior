@@ -8,7 +8,6 @@ import { Category } from 'core/types/Product';
 export type FilterForm = {
     name?: string;
     categoryId?: number;
-    
 }
 
 type Props = {

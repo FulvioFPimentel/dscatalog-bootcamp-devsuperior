@@ -7,7 +7,7 @@ type LoginData = {
     password: string;
 }
 
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = "https://fulvio-dscatalog.herokuapp.com";
 
 // Interceptar uma requisição, caso 401, redirecionar para a tela de login
 axios.interceptors.response.use(function (response) {

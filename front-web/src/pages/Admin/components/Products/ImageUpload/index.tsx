@@ -82,7 +82,7 @@ const ImageUpload = ({ onUploadSuccess, productImgUrl }: Props ) => {
                     src={imgUrl} 
                     alt={imgUrl}
                     className="uploaded-image"
-                    />
+                    /> 
                 )}
 
             </div>
