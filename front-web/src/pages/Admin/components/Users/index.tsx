@@ -1,4 +1,5 @@
 import { Route, Switch } from 'react-router-dom'; 
+import Form from './Form';
 import List from './List';
 import './styles.scss'
 
@@ -9,7 +10,7 @@ const Users = () => {
                 <List />
             </Route>
             <Route path='/admin/users/:usersId'>
-                <h1>Users Id</h1>
+                <Form />
             </Route>
         </Switch>
     )

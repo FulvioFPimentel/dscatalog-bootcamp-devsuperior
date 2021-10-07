@@ -11,7 +11,7 @@ type Props = {
 }
 
 const CardForm = ({ onChangeName, onCancel }:Props) => {
-    const { register, handleSubmit } = useForm<FormState>();
+    const { register, handleSubmit, formState: {errors} } = useForm<FormState>();
 
     const onChange = (data: FormState ) => {
         onChangeName(data.name)
@@ -29,6 +29,11 @@ const CardForm = ({ onChangeName, onCancel }:Props) => {
                     placeholder="Adicionar categoria"
 
                 />
+                    {errors.name && (
+                        <div className="invalid-feedback d-block">
+                            Campo obrigatório
+                        </div> 
+                    )}
                 </div>
 
                 <div className="col-6 d-flex align-items-center">

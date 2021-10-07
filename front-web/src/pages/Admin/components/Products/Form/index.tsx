@@ -26,7 +26,7 @@ const Form = () => {
 
     const { register, handleSubmit, formState: {errors}, setValue, control  } = useForm<FormState>(); 
     const history = useHistory();
-    const {productId } = useParams<ParamsType>();
+    const { productId } = useParams<ParamsType>();
     const [isLoadingCategories, setIsLoadingCategories] = useState(false);
     const [categories, setCategories] = useState<Category[]>([]);
     const [uploadedImgUrl, setUploadedImgUrl] = useState('');
@@ -61,7 +61,7 @@ useEffect(() => {
             ...data,
             imgUrl: uploadedImgUrl || productImgUrl
         }
-
+        console.log(data)
          makePrivateRequest({ 
              url: isEditing ? `/products/${productId}` : '/products', 
              method: isEditing ? 'PUT' : 'POST', 
@@ -86,7 +86,7 @@ useEffect(() => {
                 title={formTitle}
             >
 
-                <div className="row">
+                <div className="row">   
                     <div className="col-6">
                         <div className="margin-bottom-30">
                             <input 

@@ -19,5 +19,24 @@ export type CategoriesResponse = {
 
 export type Category = {
     id: number;
-    name: string;
+    name: string; 
+}
+
+export type UsersResponse = {
+    content: User[];
+    totalPages: number;
+}
+
+export type Role = {
+    id: number;
+    authority: string;
+}
+
+export type User = {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    roles: Role[];
 }

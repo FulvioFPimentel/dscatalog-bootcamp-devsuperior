@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation, useParams } from 'react-router';
 import './styles.scss';
 
 type Props = {
@@ -7,10 +7,22 @@ type Props = {
     children: React.ReactNode;
 }
 
+type LocationState = {
+    from:string; 
+ }
+
 const BaseForm = ({ title, children }: Props) => {
     const history = useHistory();
+    let location = useLocation<LocationState>();
+    const path = useParams();
+    const paramsValue = String(Object.keys(path)) === 'productId';
+
+    
+
+    const { from } = location.state || { from: { pathname: `/admin/${paramsValue ? 'products' : 'users'}` } };
+
     const handleCancel = () => {
-        history.push('../');
+        history.push(from);
     }
     
     return (

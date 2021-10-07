@@ -1,0 +1,31 @@
+.users-card-container{
+    padding: 20px 17px 20px 18px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.users-card-name-admin{
+    font-size: 18px;
+    line-height: 25px;
+    letter-spacing: -0.015em;
+    color: #263238;
+    margin-bottom: 5px;
+}
+
+.users-card-email-admin {
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: -0.015em;
+    color: #9E9E9E;
+}
+
+.user-name-role {
+    display: flex;
+    align-items: center;
+}
+
+.role-context {
+    font-weight: normal;
+}
