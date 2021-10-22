@@ -5,11 +5,14 @@ import { makePrivateRequest } from 'core/utils/request';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Card from '../Card';
+import UserCardLoader from '../Loaders/UserCardLoader';
 
 const List = () => {
 
     const [usersResponse, setUsersResponse] = useState<UsersResponse>();
     const [activePage, setActivePage] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+    
 
     const getUsers = useCallback(() => {
         const params = {
@@ -18,9 +21,12 @@ const List = () => {
             direction: 'DESC',
             orderBy: 'id'
         }
-
+        setIsLoading(true)
         makePrivateRequest({ url: '/users', params})
         .then(response => setUsersResponse(response.data))
+        .finally(() => {
+            setIsLoading(false)
+        })
     },[activePage])
 
    useEffect(() => {
@@ -55,14 +61,19 @@ const List = () => {
             </button>
             </div>
             <div className="admin-list-container">
-
-                {usersResponse?.content.map(user => (
-                    <Card 
-                    user={user} 
-                    key={user.id}
-                    onRemove={onRemoveUser}
-                    />
-                ))}
+                
+                {isLoading ? <UserCardLoader /> : (
+                    <div className="admin-list-container">
+                        {usersResponse?.content.map(user => (
+                            <Card 
+                                user={user} 
+                                key={user.id}
+                                onRemove={onRemoveUser}
+                            />
+                        ))}
+                    </div>
+                )}
+                
             </div>
 
             {usersResponse && (

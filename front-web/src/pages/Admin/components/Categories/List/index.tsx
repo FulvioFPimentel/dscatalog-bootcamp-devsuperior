@@ -5,11 +5,13 @@ import Card from '../Card'
 import Pagination from 'core/components/Pagination';
 import { toast } from 'react-toastify';
 import CardForm from '../CardForm';
+import CategoryCardLoader from '../Loaders/CategoryCardLoader';
 
 const List = () => {
     const [ categoryResponse, setCategoryResponse ] = useState<CategoriesResponse>();
     const [ activePage, setActivePage] = useState(0);
     const [ categoryCreate, setCategoryCreate] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const getCategory = useCallback(() => {
 
@@ -20,8 +22,12 @@ const List = () => {
             orderBy:'id'
         }
 
+        setIsLoading(true)
         makeRequest({ url: '/categories', params})
         .then(response => setCategoryResponse(response.data))
+        .finally(() => {
+            setIsLoading(false)
+        })
 
     }, [activePage])
 
@@ -73,28 +79,32 @@ const List = () => {
                 </button>
             </div>
             <div className="admin-list-container">
-
-            {categoryCreate && (
-                <CardForm 
-                    onCancel={setCategoryCreate}
-                    onChangeName={onChangeCategory}
-                />
-            )}
+                {isLoading ? <CategoryCardLoader/> : (
+                    <div className="admin-list-container">
+                        
+                        {categoryCreate && (
+                            <CardForm 
+                                onCancel={setCategoryCreate}
+                                onChangeName={onChangeCategory}
+                            />
+                        )}
             
-            {categoryResponse?.content.map(category => 
-                    <Card 
-                        category={category}
-                        key={category.id}
-                        onRemove={onRemove}
-                    />
+                        {categoryResponse?.content.map(category => 
+                            <Card 
+                                category={category}
+                                key={category.id}
+                                onRemove={onRemove}
+                            />
+                        )}
+                        {categoryResponse && (
+                            <Pagination 
+                                totalPages={categoryResponse.totalPages}
+                                activePage={activePage}
+                                onChange={page => setActivePage(page)}
+                            />
+                        )}
+                    </div>
                 )}
-            {categoryResponse && (
-                <Pagination 
-                    totalPages={categoryResponse.totalPages}
-                    activePage={activePage}
-                    onChange={page => setActivePage(page)}
-                />
-            )}
             </div>
         </div>
 

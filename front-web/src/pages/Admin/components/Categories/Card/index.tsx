@@ -18,11 +18,9 @@ const Card = ({category, onRemove}:Props) => {
     }
 
     const onChangeUpdate = (data: string) => {
-        console.log(data)
         const payload = {
             name: data
         }
-        console.log(payload)
 
         makePrivateRequest({ url: `/categories/${category.id}`, method: 'PUT', data: payload })
             .then(() => {

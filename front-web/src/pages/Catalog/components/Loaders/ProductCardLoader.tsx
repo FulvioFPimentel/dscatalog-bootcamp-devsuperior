@@ -4,7 +4,7 @@ import { generateList } from 'core/utils/list';
 
 
 const ProductCardLoader = () => {
-    const loaderItems = generateList(12);
+    const loaderItems = generateList(3);
     let n = 0;
     return (
         <>

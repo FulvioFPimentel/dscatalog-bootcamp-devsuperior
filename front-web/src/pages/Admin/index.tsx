@@ -7,8 +7,6 @@ import Categories from './components/Categories'
 import './styles.scss'
 import Users from './components/Users';
 
-
-
 const Admin = () => (
     <div className="admin-container">
         <Navbar />
