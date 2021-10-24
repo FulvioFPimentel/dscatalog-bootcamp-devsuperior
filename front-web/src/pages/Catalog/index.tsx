@@ -22,7 +22,7 @@ const Catalog = () => {
             name,
             categoryId: category?.id
         }
-
+ 
         setIsLoading(true);
         makeRequest({ url: '/products', params})
             .then(response => setProductResponse(response.data))
@@ -55,7 +55,7 @@ const Catalog = () => {
     return (
         <div className="catalog-container">
 
-                <div className="d-flex justify-content-between">
+                <div className="filter-container">
                     <h1 className="catalog-title">
                         Catálogo de produto
                     </h1>

@@ -44,7 +44,7 @@ public class ProductResource {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		
 		Page<ProductDTO> list = service.findAllPaged(categoryId, name.trim(), pageRequest);		
-		return ResponseEntity.ok().body(list);
+		return ResponseEntity.ok().body(list);	
 	}
 	
 	@GetMapping(value = "/{id}")
