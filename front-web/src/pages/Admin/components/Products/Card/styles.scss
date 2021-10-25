@@ -1,6 +1,8 @@
 .product-card-admin {
     margin-bottom: 20px;
     border-radius: 10px;
+    display: flex;
+    flex-direction: row;
 
     .product-currency {
         font-size: 14px;
@@ -14,6 +16,7 @@
 .product-card-image-admin {
     width: 100px;
     height: 100px;
+    margin: 0px 10px;
 }
 
 .product-card-name-admin {
@@ -24,4 +27,10 @@
 
 .badge {
     font-size: 35%;
+}
+
+@media (max-width: 768px) {
+    .card-content {
+        margin-left: 10px;
+    }
 }

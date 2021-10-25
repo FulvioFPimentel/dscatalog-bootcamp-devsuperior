@@ -1,0 +1,26 @@
+.admin-products-add {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
+
+.admin-products-filters {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+
+@media (max-width: 768px) {
+    .admin-products-add {
+        display: flex;
+        flex-direction: column-reverse;
+
+
+    }
+
+    .admin-products-filters {
+        margin-bottom: 20px;
+        padding: 0px;
+    }
+}

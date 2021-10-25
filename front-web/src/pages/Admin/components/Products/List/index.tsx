@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import Card from '../Card'
 import CardLoader from '../loaders/ProductCardLoader'
+import './styles.scss'
 
 const List = () => {
     const[productsResponse, setProductResponse] = useState<ProductsResponse>();
@@ -78,18 +79,21 @@ const List = () => {
     return (
         <div className="admin-products-list" >
 
-            <div className="d-flex justify-content-between" >
-            <button className="btn btn-primary btn-lg" onClick={handleCreate}>
-                ADICIONAR
-            </button>
+            <div className="admin-products-add" >
+ 
+                <button className="btn btn-primary btn-lg" onClick={handleCreate}>
+                    ADICIONAR
+                </button>
 
-            <ProductFilters 
-                name={name}
-                category={category}
-                handleChangeName={handleChangeName}
-                handleChangeCategory={handleChangeCategory}
-                clearFilters={clearFilters}
-            />
+                <div className="admin-products-filters">
+                    <ProductFilters 
+                        name={name}
+                        category={category}
+                        handleChangeName={handleChangeName}
+                        handleChangeCategory={handleChangeCategory}
+                        clearFilters={clearFilters}
+                    />
+                </div>
             </div>
             
             <div className="admin-list-container">
