@@ -32,7 +32,6 @@ const ProductDetails = () => {
                     <h1 className="text-goback">voltar</h1>
                 </Link>
                 <div className="product-details-info">
-                    <div className="col-6 pr-5">
                         {isLoading ? <ProductInfoLoader /> : (
                             <>
                                 <div className="product-details-card text-center">
@@ -47,13 +46,12 @@ const ProductDetails = () => {
                                 </div>
                             </>
                         )}
-                    </div>
                     <div className="product-details-card">
                         {isLoading ? <ProductDescriptionLoader /> : (
                             <>
                                 <h1 className="product-description-title">
                                     Descrição do Produto
-                                                    </h1>
+                                </h1>
                                 <p className="product-description-text">
                                     {product?.description}
                                 </p>

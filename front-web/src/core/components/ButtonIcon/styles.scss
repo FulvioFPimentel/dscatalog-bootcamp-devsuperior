@@ -1,3 +1,7 @@
+.default-button {
+    display: flex;
+}
+
 .btn-icon{
     height: 70px;
     width: 380px ;
@@ -14,3 +18,24 @@
     justify-content: center;
     color: #fff;
 }
+
+@media(max-width: 576px) {
+    .default-button {
+        max-width: 70vw;
+        height: 50px;
+        margin-bottom: 15px;
+    }
+
+    .default-button button h5 {
+        font-size: 1em;
+    }
+
+    .btn-icon {
+        height: 50px;
+    }
+    
+    .btn-icon-content {
+        height: 50px;
+    }
+}
+

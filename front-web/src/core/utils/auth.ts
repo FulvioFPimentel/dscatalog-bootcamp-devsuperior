@@ -4,6 +4,7 @@ import history from "./history";
 export const CLIENT_ID = process.env.REACT_APP_CLIENT_ID ?? 'dscatalog';
 export const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET ?? 'dscatalog123';
 
+
 type LoginResponse = {
     access_token: string;
     token_type: string;
@@ -28,6 +29,7 @@ export const saveSessionData = (loginResponse: LoginResponse) => {
 // Pegando o access_token do localStorage
 export const getSessionData = () => {
     const sessionData = localStorage.getItem('authData') ?? '{}';
+    console.log(sessionData)
     const parsedSessionData = JSON.parse(sessionData); 
 
     return parsedSessionData as LoginResponse;
@@ -35,6 +37,7 @@ export const getSessionData = () => {
 
 export const getAccessTokenDecoded = () => {
     const sessionData = getSessionData();
+
     try{
         const tokenDecoded = jwtDecode(sessionData.access_token);
         return tokenDecoded as AccessToken;

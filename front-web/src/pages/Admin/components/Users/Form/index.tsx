@@ -54,7 +54,7 @@ const Form = () => {
                     data 
                     })
             .then(() => {
-                toast.info('Usuário salvo con sucesso!')
+                toast.info('Usuário salvo com sucesso!')
                 history.push('/admin/users')
             })
             .catch(() => {
