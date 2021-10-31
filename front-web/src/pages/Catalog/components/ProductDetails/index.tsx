@@ -14,8 +14,8 @@ type ParamsType = {
 
 const ProductDetails = () => {
     const { productId } = useParams<ParamsType>();
-    const [product, setProduct] = useState<Product>();
-    const [isLoading, setIsLoading] = useState(false);
+    const [ product, setProduct ] = useState<Product>();
+    const [ isLoading, setIsLoading ] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);

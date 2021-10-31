@@ -23,3 +23,21 @@
         width: 100%;
     }
 }
+
+@media (max-width: 576px) {
+    .admin-base-form {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .base-form-actions {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .btn-save {
+        width: 110px;
+    }
+}

@@ -45,6 +45,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
 			http.headers().frameOptions().disable();
+			
+			System.out.println(env.getActiveProfiles());
+			
 		}
 		
 		http.authorizeRequests()
@@ -57,7 +60,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		http.cors().configurationSource(corsConfigurationSource());
 		
 	}
-	
+				// Cors
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration corsConfig = new CorsConfiguration();                                    // Configuração do cors 

@@ -13,3 +13,14 @@
     color: #263238;
     font-weight: normal;
 }
+
+@media (max-width:576px) {
+    .auth-card {
+        margin: 0 auto;
+        width: 90vw;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+}
