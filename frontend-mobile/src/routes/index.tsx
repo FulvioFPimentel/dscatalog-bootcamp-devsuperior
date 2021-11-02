@@ -1,24 +1,40 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { Home, Catalog, ProductDetails, Login } from '../pages'
+import { colors, nav } from '../styles';
+import { NavBar } from "../components"
+import { Text } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 export type StackParam = {
     Home: undefined;
     Catalog: undefined;
+    ProductDetails: { id: Number };
+    Login: undefined;
   };
 
   // Navigator
-const Stack = createNativeStackNavigator<StackParam>();
+const Stack = createStackNavigator<StackParam>();
 
-import { Home, Catalog } from '../pages'
+const HeaderText: React.FC = () => <Text style={nav.leftText}>DS Catalog</Text>;
+
 
 const Routes: React.FC = () => {
     return (
 
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{
+            headerTitle: " ",
+            headerStyle: {
+                backgroundColor: colors.primary,
+            },
+            headerLeft: () => <HeaderText />,
+            headerRight: () => <NavBar/>
+        }}
+        >
             <Stack.Screen name="Home" component={Home}/>
             <Stack.Screen name="Catalog" component={Catalog}/>
+            <Stack.Screen name="ProductDetails" component={ProductDetails} />
+            <Stack.Screen name="Login" component={Login} />
         </Stack.Navigator>
-
     )
 }
 

@@ -4,8 +4,6 @@ import { ProductCard, SearchInput } from '../components';
 import { api } from '../services';
 import { theme } from '../styles';
 
-
-
 const Catalog: React.FC = () => {
     const [ search, setSearch ] = useState("");
     const [ products, setProducts ] = useState([]);
@@ -18,7 +16,6 @@ const Catalog: React.FC = () => {
         setLoading(false);
     }
    
-
     useEffect(() => {
         fillProducts();
     }, [])
