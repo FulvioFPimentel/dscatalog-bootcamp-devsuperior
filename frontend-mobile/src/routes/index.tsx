@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Catalog, ProductDetails, Login } from '../pages'
+import { Home, Catalog, ProductDetails, Login, Dashboard } from '../pages'
 import { colors, nav } from '../styles';
 import { NavBar } from "../components"
 import { Text } from 'react-native';
@@ -10,6 +10,7 @@ export type StackParam = {
     Catalog: undefined;
     ProductDetails: { id: Number };
     Login: undefined;
+    Dashboard: undefined;
   };
 
   // Navigator
@@ -34,6 +35,7 @@ const Routes: React.FC = () => {
             <Stack.Screen name="Catalog" component={Catalog}/>
             <Stack.Screen name="ProductDetails" component={ProductDetails} />
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Dashboard" component={Dashboard} />
         </Stack.Navigator>
     )
 }

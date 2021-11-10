@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, Text, TouchableOpacity, Image, TouchableNativeFeedback } from 'react-native';
 import menu from '../assets/menu.png';
-import { nav } from '../styles';
+import { nav, text } from '../styles';
 import { TouchableHighlight, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { doLogout, isAuthenticated } from '../services/auth';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { StackParam } from '../routes';
+
+type navigationScreenProp = StackNavigationProp<StackParam>;
 
 const NavBar: React.FC = () => {
     const [ show, setShow ] = useState(false);
-    const navigation = useNavigation();
+    const [ authenticated, setAuthenticated ] = useState(false);
+    const navigation = useNavigation<navigationScreenProp>();
     const route = useRoute();
 
     function navigate(path: any) {
@@ -18,8 +24,31 @@ const NavBar: React.FC = () => {
         setShow(false);
     }
 
+    async function logged () {
+        const result = await isAuthenticated();
+        result ? setAuthenticated(true) : setAuthenticated(false)
+    }
+
+    function logout () {
+        doLogout();
+        navigation.navigate("Login")
+    }
+
+    useEffect(() => {
+        logged();
+    }, [])
+
     return(
-        <TouchableWithoutFeedback style={nav.drawer} onPress={() => setShow(!show)}>
+
+    <>
+        {authenticated ? (
+            <TouchableOpacity style={nav.logoutBtn} onPress={() => logout()}>
+                <Text style={text.logoutText}>Logout</Text>
+            </TouchableOpacity>
+
+        ) : (
+
+            <TouchableWithoutFeedback style={nav.drawer} onPress={() => setShow(!show)}>
             <Image source={menu} />
             {show ? (
                 <View style={nav.options}>
@@ -56,6 +85,10 @@ const NavBar: React.FC = () => {
 
             </View>) : null }
         </TouchableWithoutFeedback>
+        )}
+    </>
+
+
     )
 }
 

@@ -4,8 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 import { api } from '../services';
 import { text, theme } from '../styles';
 import arrow from '../assets/leftArrow.png';
+import { ProductProps } from '../components/ProductCard';
 
-const ProductDetails = ({ route: { params: { id } }}) => {
+const ProductDetails: React.FC<ProductProps> = ({ route: { params: { id } }}) => {
 
     const [ product, setProduct ] = useState({
         id: null,

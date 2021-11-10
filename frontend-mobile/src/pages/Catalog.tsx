@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, ActivityIndicator, View, Text } from 'react-native';
+import { ScrollView, ActivityIndicator, View, Text, ImageSourcePropType } from 'react-native';
 import { ProductCard, SearchInput } from '../components';
 import { api } from '../services';
 import { theme } from '../styles';
 
-const Catalog: React.FC = () => {
+interface ProductsData {
+    id: number,
+    name: string,
+    imgUrl: ImageSourcePropType,
+    price: Number,
+    route: {params: {id: Number}}
+}
+
+const Catalog: React.FC<ProductsData> = () => {
     const [ search, setSearch ] = useState("");
-    const [ products, setProducts ] = useState([]);
+    const [ products, setProducts ] = useState<ProductsData[]>([]);
     const [ loading, setLoading ] = useState(false);
 
     async function fillProducts() { 
         setLoading(true);
-        const res = await api.get(`/products?page=0&linesPerPages=12&direction=ASC&orderBy=name`);
+        const  res = await api.get(`/products?page=0&linesPerPages=12&direction=ASC&orderBy=name`);
         setProducts(res.data.content);
         setLoading(false);
     }
@@ -21,7 +29,7 @@ const Catalog: React.FC = () => {
     }, [])
 
     const data = search.length > 0 ?
-    products.filter(product => product.name.toLowerCase().includes(search.toLowerCase())) : products
+    products.filter(product => product.name.toLowerCase().includes(search.toLowerCase())) : products;
 
     return (
         <ScrollView contentContainerStyle={theme.scrollContainer}>
@@ -36,7 +44,7 @@ const Catalog: React.FC = () => {
                 ) :
                 data.map((product) => (
                     <ProductCard {...product} key={product.id}/>
-                ))}
+            ))}
 
         </ScrollView>
     )
