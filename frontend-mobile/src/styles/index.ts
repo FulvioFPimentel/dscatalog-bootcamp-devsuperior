@@ -451,12 +451,13 @@ const theme = StyleSheet.create({
 
     textArea: {
         width: "100%",
+        maxWidth: "100%",
         height:200,
         borderWidth: 1,
         borderColor: colors.mediumGray,
         borderRadius: 10,
         padding: 10,
-        marginVertical: 15,
+        marginVertical: 15,        
     },
 
     selectInput: {

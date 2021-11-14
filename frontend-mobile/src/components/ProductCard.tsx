@@ -21,11 +21,12 @@ import { StackParam } from '../routes';
     description: string;
     route: {params: {id: Number}}
     handleDelete: Function;
+    handleEdit: Function;
 }
 
 type navigationScreenProp = StackNavigationProp<StackParam>;
 
-const ProductCard: React.FC<ProductProps> = ({id, name, imgUrl, price, role, handleDelete }) => {
+const ProductCard: React.FC<ProductProps> = ({id, name, imgUrl, price, role, handleDelete, handleEdit }) => {
 
     const navigation = useNavigation<navigationScreenProp>();
     return (
@@ -63,7 +64,10 @@ const ProductCard: React.FC<ProductProps> = ({id, name, imgUrl, price, role, han
                                 <Text style={text.deleteText}>Excluir</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={theme.editBtn}>
-                                <Text style={text.editText}>Editar</Text>
+                                <Text 
+                                    style={text.editText}
+                                    onPress={() => handleEdit(id)}
+                                    >Editar</Text>
                             </TouchableOpacity>
                         </View>
                     )
